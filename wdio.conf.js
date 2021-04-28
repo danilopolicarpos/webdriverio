@@ -262,6 +262,10 @@ exports.config = {
      */
     // afterFeature: function (uri, feature) {
     // },
+    // afterScenario: function (scenario) {
+    //     console.log("After scenario, reload session!");
+    //     browser.reloadSession();
+    // },
     
     /**
      * Runs after a WebdriverIO command gets executed
