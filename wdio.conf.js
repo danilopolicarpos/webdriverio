@@ -3,7 +3,7 @@ const url = require('./config/env')
 const ENV = process.env.ENV
 
 if(!ENV || !['dev', 'qa', 'hml'].includes(ENV)){
-    console.log('Por favor especifique qual o ambiente de ENV: ENV=dev|qa|hml')
+    console.log('Por favor especifique qual o ambiente: ENV=dev|qa|hml')
     process.exit()
 }
 
@@ -55,7 +55,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -154,7 +154,10 @@ exports.config = {
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./features/step-definitions/steps.js'],
+        require: [
+            './features/step-definitions/*.steps.js'
+        
+         ],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -308,10 +311,14 @@ exports.config = {
     * @param {String} oldSessionId session ID of the old session
     * @param {String} newSessionId session ID of the new session
     */
+     afterScenario: function (scenario) {
+        browser.saveScreenshot("evidencia.png", scenario.name );
+        },
+
     //onReload: function(oldSessionId, newSessionId) {
     //}
     reporters: [['allure', {
-        outputDir: 'report',
+        outputDir: 'allure-report',
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: true,
     }]],

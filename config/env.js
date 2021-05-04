@@ -1,5 +1,5 @@
 module.exports = {
-    dev: 'https://the-internet.herokuapp.com',
-    qa: 'http://www.google.com',
-    hml: 'http://www.amazon.com'
+    dev: 'https://gsp-frontend.dev.naturacloud.com/',
+    qa: 'https://gsp-frontend.qa.naturacloud.com/',
+    hml: 'https://gsp-frontend.hml.naturacloud.com/'
 }

@@ -1,20 +1,17 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 
 const LoginPage = require('../pageobjects/login.page');
-const SecurePage = require('../pageobjects/secure.page');
 
-
-
-Given("que eu esteja na pagina de login", async () => {
+Given("que eu esteja na pagina de login do GSP Peru", async () => {
   await LoginPage.open()
 });
-
+  
 When("realizar o login com sucesso", async () => {
-  await LoginPage.login()
+  await LoginPage.loginPeru()
 });
 
 Then("vejo login efetuado com sucesso", async () => {
-  await expect(SecurePage.flashAlert).toBeExisting();
+  await expect(LoginPage.modal_login).toBeExisting();
 });
 
 
