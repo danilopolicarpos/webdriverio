@@ -2,3 +2,4 @@ node_modules/
 allure-report/
 report/
 package-lock.json
+chrome/user-data

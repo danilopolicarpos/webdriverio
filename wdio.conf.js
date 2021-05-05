@@ -1,3 +1,4 @@
+
 const moment = require("moment");
 const cucumberJSON = require('wdio-cucumberjs-json-reporter')
 const { generate } = require('multiple-cucumber-html-reporter');
@@ -69,13 +70,23 @@ exports.config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 5,
+        maxInstances: 1,
         //
         browserName: 'chrome',
         'goog:chromeOptions': {
-            args: ["--start-maximized"],
+            args: ["--start-maximized",
+            // "user-data-dir=./chrome/user-data",
+            "--window-size=1440,1200"],
         },
         acceptInsecureCerts: true
+
+        // browserName: 'chrome',
+        // 'goog:chromeOptions': {
+        //   args: [
+        //     "user-data-dir=./chrome/user-data",
+        //     // “--incognito”,
+        //     "--window-size=1440,1200"
+        //   ],
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
@@ -115,7 +126,7 @@ exports.config = {
     baseUrl: url[process.env.ENV],
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 150000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
@@ -226,7 +237,7 @@ exports.config = {
     onComplete: function(exitCode, config, capabilities, results) {
         generate({
           openReportInBrowser: true,
-          pageTitle: "Relatório de execução de testes" + "_" + moment().format(),
+          pageTitle: "Relatório de Testes" + "_" + moment().format(),
           reportName: "Relatório de execução de testes - E2E",
           screenshotPath: './reportsQa/screenshots/',
           displayDuration: true,
@@ -238,7 +249,7 @@ exports.config = {
           customData: {
             title: "Informações de execução",
             data: [
-              { label: "Project", value: "BBM-IB" },
+              { label: "Project", value: "Lego GSP" },
             //   { label: "Release", value: FRONT_VERSION },
               // { label: ‘Ciclo’, value: ‘B11221.34321’ },
               // { label: ‘Início’, value: ‘’},
@@ -306,8 +317,11 @@ exports.config = {
     /**
      * Runs after a Cucumber scenario
      */
-    // afterScenario: function (world) {
-    // },
+    afterScenario: async function () {
+      await browser.reloadSession()
+    },
+
+   
     /**
      * Runs after a Cucumber feature
      */

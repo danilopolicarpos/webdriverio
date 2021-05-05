@@ -11,7 +11,6 @@ When("realizar o login com sucesso", async () => {
 });
 
 Then("vejo login efetuado com sucesso", async () => {
-//  await expect(LoginPage.modal_login).toBeExisting();
  await LoginPage.logonPeru()
  await LoginPage.homePage()
 

@@ -1,6 +1,6 @@
 
 const Page = require('./page');
-const timout = 4000
+const timout = 150000
 /**
  * sub page containing specific selectors and methods for a specific page
  */
@@ -32,20 +32,22 @@ class LoginPage extends Page {
     }
 
     async eleminarPedido(){
-        await (await this.btnEliminarPedido).waitForClickable();
+        await (await this.btnEliminarPedido).waitForClickable({timout});
         await (await this.btnAceptar).click();
     }
 
     async logonPeru(){
         try
         {
-          await (await this.btnEliminarPedido).waitForDisplayed({timout})
-          this.eleminarPedido()
-          await (await this.modal_login).waitForDisplayed({timout})
-          this.btnAceptar_test()
-         
-        }catch(error){
-         console.log("nao tem o popup")
+         await this.eleminarPedido()
+
+          if (await (await this.modal_login).waitForDisplayed({timout})) {
+            this.btnAceptar_test()   
+              }  
+            }
+         catch(error){
+            console.log("passou aqui")
+           
         }
     }
 
