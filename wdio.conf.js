@@ -1,4 +1,7 @@
-
+const moment = require("moment");
+const cucumberJSON = require('wdio-cucumberjs-json-reporter')
+const { generate } = require('multiple-cucumber-html-reporter');
+const { removeSync, existsSync, mkdirSync } = require('fs-extra')
 const url = require('./config/env')
 const ENV = process.env.ENV
 
@@ -85,7 +88,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'warn',
     //
     // Set specific log levels per logger
     // loggers:
@@ -156,7 +159,6 @@ exports.config = {
         // <string[]> (file/dir) require files before executing features
         require: [
             './features/step-definitions/*.steps.js'
-        
          ],
         // <boolean> show full backtrace for errors
         backtrace: false,
@@ -199,6 +201,52 @@ exports.config = {
      */
     // onPrepare: function (config, capabilities) {
     // },
+
+    // / eslint-disable-next-line no-unused-vars
+    onPrepare: function (config, capabilities) {
+      removeSync('.tmp/');
+      if (!existsSync('.tmp/')){
+        mkdirSync('.tmp/');
+      }
+      // eslint-disable-next-line no-console
+      console.log('Iniciando os testes');
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    afterStep: async function ({ uri, feature, step }, context, { error, result, duration, passed, retries }) {
+        await browser.takeScreenshot().then((val) => {
+          cucumberJSON.default.attach(val, 'image/png')
+        }).catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log('Erro ao capturar screenshots ', err);
+        });
+      },
+
+      // eslint-disable-next-line no-unused-vars
+    onComplete: function(exitCode, config, capabilities, results) {
+        generate({
+          openReportInBrowser: true,
+          pageTitle: "Relatório de execução de testes" + "_" + moment().format(),
+          reportName: "Relatório de execução de testes - E2E",
+          screenshotPath: './reportsQa/screenshots/',
+          displayDuration: true,
+          saveCollectedJSON: true,
+          jsonDir: '.tmp/json/',
+          reportPath: './reports/local/implemented',
+        //   pageFooter:
+        //   ‘<img src=“./utils/img/logo-bocombbm.png” style=“margin-left: 20px” height=“35" width=“226” />  ’,
+          customData: {
+            title: "Informações de execução",
+            data: [
+              { label: "Project", value: "BBM-IB" },
+            //   { label: "Release", value: FRONT_VERSION },
+              // { label: ‘Ciclo’, value: ‘B11221.34321’ },
+              // { label: ‘Início’, value: ‘’},
+              // { label: ‘Fim’, value: }
+            ],
+          }
+        });
+      },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -311,15 +359,24 @@ exports.config = {
     * @param {String} oldSessionId session ID of the old session
     * @param {String} newSessionId session ID of the new session
     */
-     afterScenario: function (scenario) {
-        browser.saveScreenshot("evidencia.png", scenario.name );
-        },
+    //  afterScenario: function (scenario) {
+    //     browser.saveScreenshot("evidencia.png", scenario.name );
+    //     },
 
     //onReload: function(oldSessionId, newSessionId) {
     //}
-    reporters: [['allure', {
-        outputDir: 'allure-report',
-        disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: true,
-    }]],
+
+    reporters: [
+        ["spec", {
+          symbols: {
+            passed: '[PASSOU]',
+            failed: '[FALHOU]'
+          },
+          // skipped set to default ‘-’
+        }],
+        ["cucumberjs-json", {
+          jsonFolder: '.tmp/json/',
+          language: 'pt',
+        }],
+      ],
 }
