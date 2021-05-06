@@ -18,8 +18,16 @@ When("realizar uma busca de produto por codigo", async () => {
     await HomePage.realizarBuscaCodigo();
  });
 
+ When("realizo uma busca de produto por codigo", async () => {
+   await HomePage.realizarBuscaCodigo();
+});
+
  When("realizar uma busca de produto inexistente", async () => {
    await HomePage.realizarBuscaInexistente();
+});
+
+When("agregar o produto ao carrinho", async () => {
+   await HomePage.agregarProduto();
 });
 
 Then("vejo o resultado da busca por nome", async () => {
@@ -32,5 +40,9 @@ Then("vejo o resultado da busca por nome", async () => {
 
  Then("vejo o resultado da busca para produto inexistente", async () => {
    await expect(HomePage.semResultado).toBeExisting();
+});
+
+Then("vejo a mensagem produto agregado com sucesso", async () => {
+   await HomePage.msnProdutoAgregado()
 });
  
