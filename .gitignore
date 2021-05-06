@@ -3,3 +3,5 @@ allure-report/
 report/
 package-lock.json
 chrome/user-data
+.tmp/json/login.json
+reports/
