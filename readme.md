@@ -8,8 +8,14 @@
     npm -v
 5. install Visual Studio Code
 
-# Como rodar os testes
-ENV=dev npx wdio run ./wdio.conf.js 
-allure open
-allure generate  report && allure open
+# Atualizando o projeto
+npm install --safe
+
+# Como rodar os testes apontando para QA
+ENV=qa npx wdio run ./wdio.conf.js 
+
+# Como rodar os testes apontando para HML
+ENV=hml npx wdio run ./wdio.conf.js 
+
+#Dicas
 https://webdriver.io/docs/gettingstarted/
