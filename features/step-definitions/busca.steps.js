@@ -8,6 +8,8 @@ Given("que eu esteja na home com cn ativa", async () => {
   await LoginPage.loginPeru()
   await LoginPage.logonPeru()
   await LoginPage.homePage()
+  await LoginPage.vitrines()
+  await LoginPage.logoHome()
 });
 
 When("realizar uma busca de produto por nome", async () => {

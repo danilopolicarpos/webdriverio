@@ -59,6 +59,12 @@ class LoginPage extends Page {
         return this.vitrine
     }
 
+    async logoHome(){
+        await this.waitLoading()
+        await (await this.home).waitForClickable({timout})
+        return this.home
+    }
+
 
 
   
