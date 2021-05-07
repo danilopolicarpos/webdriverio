@@ -1,5 +1,6 @@
 # language: pt
 Funcionalidade: Busca 
+Interação com a torre de produto (GPP) e Avability para disponibilidade de estoque.
 
 Cenário: Buscar produto por nome no GSP
     Dado que eu esteja na home com cn ativa
