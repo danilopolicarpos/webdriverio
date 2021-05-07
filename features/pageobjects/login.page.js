@@ -55,6 +55,7 @@ class LoginPage extends Page {
     }
 
     async vitrines(){
+        await this.waitLoading()
         await (await this.vitrine).isDisplayed({timout})
         return this.vitrine
     }

@@ -13,6 +13,7 @@ module.exports = class Page {
         let status = await (await this.loading).isDisplayed();
         while (status != false) {
           status = await (await this.loading).isDisplayed();
+          console.log(status, "nao");
         }
       }
 
