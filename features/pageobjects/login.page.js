@@ -16,6 +16,7 @@ class LoginPage extends Page {
     get home (){return $('//*[@id="root"]/div/header/div/div[2]/a')}
     get btnEliminarPedido () {return $('button.btn.background-white.bnt-bottom-left.button-active-modal')}
     get vitrine (){return $('//*[@id="root"]/div/div[3]/div[3]/div/div[1]/main/section/footer/div/h6')}
+    get agregarKitInicio (){return $('//*[@id="root"]/div/div[3]/div[3]/div/div[1]/main/div/div/div/div[2]/button')}
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -36,11 +37,17 @@ class LoginPage extends Page {
         await (await this.btnAceptar).click();
     }
 
+    async btnAgregarKitInicio(){
+        await (await this.agregarKitInicio).waitForClickable({timout});
+        await (await this.agregarKitInicio).click();
+    }
+
     async logonPeru(){
         try
         {
          this.btnAceptar_test()  
          this.eleminarPedido() 
+         this.btnAgregarKitInicio()
             }
          catch(error){
             console.log("passou aqui")

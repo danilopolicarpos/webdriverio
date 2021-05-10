@@ -22,3 +22,10 @@ Cenário: Agregar produto no carrinho com sucesso
     E realizo uma busca de produto por codigo
     Quando agregar o produto ao carrinho
     Então vejo a mensagem produto agregado com sucesso
+
+@dev
+Cenário: Remover produto no carrinho
+    Dado que eu esteja na home com cn ativa
+    E com um produto adicionado no carrinho
+    Quando remover o produto no carrinho
+    Entao o produto não é mais apresentado

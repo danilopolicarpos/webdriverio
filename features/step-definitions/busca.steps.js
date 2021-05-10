@@ -12,6 +12,17 @@ Given("que eu esteja na home com cn ativa", async () => {
   await LoginPage.logoHome()
 });
 
+When("com um produto adicionado no carrinho", async () => {
+   await HomePage.realizarBuscaCodigo();
+   await HomePage.agregarProduto();
+   await HomePage.btnCarrinho();
+
+});
+
+When("remover o produto no carrinho", async () => {
+   await HomePage.removerProduto()
+});
+
 When("realizar uma busca de produto por nome", async () => {
    await HomePage.realizarBusca();
 });
@@ -48,3 +59,6 @@ Then("vejo a mensagem produto agregado com sucesso", async () => {
    await HomePage.msnProdutoAgregado()
 });
  
+Then("o produto não é mais apresentado", async () => {
+   await HomePage.removerProduto()
+});
