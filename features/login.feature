@@ -1,6 +1,7 @@
 # language: pt
 Funcionalidade: Login
 
+@dev
 Cenário: Realizar login com sucesso GSP Peru
     Dado que eu esteja na pagina de login do GSP Peru
     Quando realizar o login com sucesso 
